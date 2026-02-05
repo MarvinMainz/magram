@@ -75,6 +75,7 @@ A major outcome of MAGRAM was the two-volume work [Grammaticalization scenarios:
  * 25 detailed studies on grammaticalization scenarios across languages and areas.
 
 The core team of MAGRAM consisted of
+
  * [**Walter Bisang**](https://www.linguistik.fb05.uni-mainz.de/mitarbeiter/walter-bisang/) (WB) – Principal Investigator
  * [**Andrej L. Malchukov**](https://www.linguistik.fb05.uni-mainz.de/mitarbeiter/andrej-malchukov/) (AM) – Principal Investigator
  * [**Linlin Sun**](https://www.linguistik.fb05.uni-mainz.de/mitarbeiter/linlin-sun/) (LS) – annotation and evaluation
