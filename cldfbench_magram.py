@@ -9,95 +9,12 @@ from clldutils.misc import slug
 from cldfbench import Dataset as BaseDataset, CLDFSpec
 from simplepybtex.database import BibliographyData, parse_file
 
-# file maker do be like that sometimes...
-COLUMN_MAP = {
-    'f1_Code':                 'Code',
-    'f2_Subset':               'Subset',
-    'f3_Datasource':           'Data_Source',
-    'f4_Authors':              'Author(s)',
-    'f5_MAreaD':               'Macro-Area_Dryer',
-    'f6_MAreaH':               'Macro-Area_Hammarström_Donohue',
-    'f7_Family':               'Family',
-    'f8_Glottocode':           'Glottocode',
-    'f9_ISO':                  'ISO 639-3',
-    'f10_Genus':               'Genus',
-    'f11_Languagename':        'Language',
-    'f12':                     'level_of_reconstruction_if_applicable',
-    'f13_Source_form':         'Source:Form',
-    'f14_Source_meaning':      'Source:Meaning',
-    'f15_Source_meaning_simp': 'Source:Meaning_simplified',
-    'f16_Source_Labelgroup':   'Source:Label_Group',
-    'f17_Target_form':         'Target:Form',
-    'f18_Target_meaning':      'Target:Meaning',
-    'f19_Target_meaning_simp': 'Target:Meaning_simplified',
-    'f20_Target_Labelgroup':   'Target:Label_Group',
-    'f21_Ex':                  'Example:Material',
-    'f22_Ex_gloss':            'Example:Glossing',
-    'f23_Ex_translation':      'Example:Translation',
-    'Example_Bibkeys':         'Example_Bibkeys',
-    'f24_Ex_reference':        'Example:Reference',
-    'f25':                     'Comments',
-    'f26':                     'value:semantic_integrity',
-    'f27':                     'value:phonetic_reduction',
-    'f28':                     'value:paradigmaticity',
-    'f29':                     'value:bondedness',
-    'f30':                     'value:paradigmatic_variability',
-    'f31':                     'value:syntagmatic_variability',
-    'f32':                     'value:decategorization',
-    'f33':                     'value:allomorphy',
-    'f34':                     'change:semantic_integrity',
-    'f35':                     'change:phonetic_reduction',
-    'f36':                     'change:paradigmaticity',
-    'f37':                     'change:bondedness',
-    'f38':                     'change:paradigmatic_variability',
-    'f39':                     'change:syntagmatic_variability',
-    'f40':                     'change:decategorization',
-    'f41':                     'change:allomorphy',
-}
-
-
-ASCII_DIAGRAM = """\
-             Starting point:
-       written text by contributors
-           (Handbook & SL30)
-
-                   |
-                   v
-
-     Coding (data, metadata, evaluation)
-      from text by MAGRAM team *coders*
-    using questionnaire & *team* meetings
-
-                   |
-                   v
-
-         Improving coding (*team*) <-------.
-                                           |
-                   |                    Feedback
-                   v                       |
-                                           |
-         sending coding sheets to  --------´
-              *contributors*
-
-                   |
-                   v
-
-     Formatting, streamlining glossing
-           & grammatical labels
-              (*MAGRAM team*)
-
-                   |
-                   v
-
-      Roll-out of MAGRAM version 1.0
-"""
-
 
 def parse_raw_data(raw_data):
     return [
-        {new_k: trimmed_v
+        {k: trimmed_v
          for k, v in row.items()
-         if (new_k := COLUMN_MAP.get(k)) and (trimmed_v := v.strip())}
+         if (trimmed_v := v.strip())}
         for row in raw_data]
 
 
@@ -482,9 +399,7 @@ class Dataset(BaseDataset):
         prefix.append('- [CLDF Datasets](#cldf-datasets)')
         prefix.append('')
         intro_template = Template(intro_text)
-        return intro_template.substitute(
-            prefix='\n'.join(prefix),
-            workflowdiagram='![Workflow Diagram](workflow.png)')
+        return intro_template.substitute(prefix='\n'.join(prefix))
 
     def cmd_download(self, args):
         pass
@@ -537,9 +452,7 @@ class Dataset(BaseDataset):
         # write cldf data
 
         intro_template = Template(self.raw_dir.read('intro-template.md'))
-        intro_text = intro_template.substitute(
-            prefix='',
-            workflowdiagram=ASCII_DIAGRAM)
+        intro_text = intro_template.substitute(prefix='')
         with open(self.raw_dir / 'intro.md', 'w', encoding='utf-8') as f:
             print(intro_text, end='', file=f)
 
